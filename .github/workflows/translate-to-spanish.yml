@@ -1,4 +1,4 @@
-name: Replace Variables and Commit - QA
+name: Translate from English to Spanish
 
 on:
   workflow_dispatch:   # Permite ejecutarlo manualmente desde GitHub
@@ -22,7 +22,7 @@ jobs:
 
       - name: Read JSON config and replace variables
         run: |
-          CONFIG_FILE=".github/config/replace.json"
+          CONFIG_FILE=".github/config/replace-spanish.json"
 
           FOLDER=$(jq -r '.directorio_raiz' $CONFIG_FILE)
           EXTENSIONS=$(jq -r '.extensiones_permitidas[]' $CONFIG_FILE)
