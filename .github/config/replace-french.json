@@ -1,0 +1,18 @@
+{
+    "directorio_raiz": "pbi-devops/Entities",
+    "extensiones_permitidas": [
+        ".cs"
+    ],
+    "valores_reemplazo": {
+        "Nombre": "Prenom",
+        "Apellidos": "NomDeFamille",
+        "FechaNacimiento": "DateDeNaissance",
+        "Correo": "Email",
+        "Edad": "Age",
+        "Pais": "Pays",
+        "Ciudad": "Ville ",
+        "Calle": "Rue",
+        "Numero": "Numero",
+        "Español": "Français"
+    }
+}
