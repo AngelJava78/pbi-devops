@@ -1,0 +1,83 @@
+name: Crear rama dev_yymmdd al hacer push en develop
+
+on:
+  push:
+    branches:
+      - develop  # Cambia a 'dev' si tu rama se llama así
+
+permissions:
+  contents: write  # necesario para crear referencias con GITHUB_TOKEN
+
+jobs:
+  create-date-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Obtener SHA HEAD actual de develop
+        id: head
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const branch = context.ref.replace('refs/heads/', ''); // 'develop'
+
+            const { data: refData } = await github.rest.git.getRef({
+              owner, repo, ref: `heads/${branch}`
+            });
+
+            core.setOutput('base_sha', refData.object.sha);
+            core.setOutput('base_ref', branch);
+
+      - name: Crear rama dev_yymmdd (con sufijo si ya existe)
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const baseSha = '${{ steps.head.outputs.base_sha }}';
+
+            // Fecha en zona horaria de CDMX, formato yymmdd -> dev_yyMMdd
+            const tz = 'America/Mexico_City';
+            const now = new Date();
+            const fmt = new Intl.DateTimeFormat('en-CA', {
+              timeZone: tz, year: '2-digit', month: '2-digit', day: '2-digit'
+            });
+            const parts = Object.fromEntries(fmt.formatToParts(now).map(p => [p.type, p.value]));
+            const dateYYMMDD = `${parts.year}${parts.month}${parts.day}`;
+            const baseName = `dev_${dateYYMMDD}`;
+
+            async function createIfPossible(name) {
+              try {
+                await github.rest.git.createRef({
+                  owner, repo,
+                  ref: `refs/heads/${name}`,
+                  sha: baseSha
+                });
+                return { ok: true, name };
+              } catch (e) {
+                if (e.status === 422 && /Reference already exists/i.test(e.message)) {
+                  return { ok: false, exists: true };
+                }
+                throw e;
+              }
+            }
+
+            // Intento sin sufijo, luego dev_yymmdd-2..-20
+            let created = await createIfPossible(baseName);
+            if (!created.ok && created.exists) {
+              for (let i = 2; i <= 20; i++) {
+                const candidate = `${baseName}-${i}`;
+                const res = await createIfPossible(candidate);
+                if (res.ok) { created = res; break; }
+              }
+            }
+
+            if (!created.ok) {
+              core.setFailed('No se pudo crear la rama con nombre basado en fecha.');
+              return;
+            }
+
+            core.info(`✅ Rama creada: ${created.name} -> ${baseSha}`);
