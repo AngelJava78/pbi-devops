@@ -4,7 +4,7 @@ on:
   workflow_dispatch:   # Permite ejecutarlo manualmente desde GitHub
   push:                # Opcional: también puede ejecutarse en cada push
     branches:
-      - "qa"
+      - "release-qa"
 
 
 permissions:
