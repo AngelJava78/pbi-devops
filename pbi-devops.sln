@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pbi-devops", "pbi-devops\pbi-devops.csproj", "{D2A7E42E-491B-F370-0129-CDD6560A0E9C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D2A7E42E-491B-F370-0129-CDD6560A0E9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2A7E42E-491B-F370-0129-CDD6560A0E9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2A7E42E-491B-F370-0129-CDD6560A0E9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2A7E42E-491B-F370-0129-CDD6560A0E9C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E1EA0B40-11C8-452D-A3E5-E774FDE34360}
+	EndGlobalSection
+EndGlobal

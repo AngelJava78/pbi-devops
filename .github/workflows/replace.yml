@@ -1,0 +1,54 @@
+name: Replace Variables and Commit - QA
+
+on:
+  workflow_dispatch:   # Permite ejecutarlo manualmente desde GitHub
+  push:                # Opcional: también puede ejecutarse en cada push
+    branches:
+      - "qa"
+
+
+permissions:
+  contents: write
+
+jobs:
+  replace-and-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Read JSON config and replace variables
+        run: |
+          CONFIG_FILE=".github/config/replace.json"
+
+          FOLDER=$(jq -r '.directorio_raiz' $CONFIG_FILE)
+          EXTENSIONS=$(jq -r '.extensiones_permitidas[]' $CONFIG_FILE)
+          
+          for EXT in $EXTENSIONS; do
+            echo "Procesando extensión: $EXT en carpeta $FOLDER"
+            
+            jq -r '.valores_reemplazo | to_entries[] | "\(.key) \(.value)"' $CONFIG_FILE | while read SEARCH REPLACE; do
+
+              echo "Reemplazando $SEARCH -> $REPLACE en *$EXT"
+              find "$FOLDER" -type f -name "*$EXT" -exec sed -i "s/$SEARCH/$REPLACE/g" {} +
+            done
+          done
+
+      - name: Configure Git
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: Commit and push changes
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git add .
+            git commit -m "UP: Remplazo de variables del JSON config(QA), rama ${{ github.ref_name }}"
+            git push origin HEAD:${{ github.ref_name }}
+          else
+            echo "No se detectaron cambios, no se realiza commit."
+          fi
+
