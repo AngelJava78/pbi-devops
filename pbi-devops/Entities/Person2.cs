@@ -6,6 +6,8 @@ public class Person2
 	public string Prenom { get; set; }
 	public string NomDeFamille { get; set; }
 	public DateTime DateDeNaissance { get; set; }
+	// No changes expected for Gender property
+	public string Gender { get; set; }
 	public string Email { get; set; }
 	public int Age { get; set; }
 	public string Pays { get; set; }
