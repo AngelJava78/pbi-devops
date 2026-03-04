@@ -12,4 +12,8 @@ public class Person3
 	public string City { get; set; }
 	public string Street { get; set; }
 	public string Number { get; set; }
+	// No changes expected for Phone property
+	public string Phone { get; set; }
+	// No changes expected for PostalCode property
+	public string PostalCode { get; set; }
 }
