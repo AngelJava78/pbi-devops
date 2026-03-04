@@ -3,16 +3,16 @@ namespace pbi_devops.Entities;
 public class Person3
 {
 	public long Id { get; set; }
-	public string Nombre { get; set; }
-	public string Apellidos { get; set; }
-	public DateTime FechaNacimiento { get; set; }
+	public string Prenom { get; set; }
+	public string NomDeFamille { get; set; }
+	public DateTime DateDeNaissance { get; set; }
 	// No changes expected for Gender property
 	public string Gender { get; set; }
-	public string Correo { get; set; }
-	public int Edad { get; set; }
-	public string Pais { get; set; }
-	public string Ciudad { get; set; }
-	public string Calle { get; set; }
+	public string Email { get; set; }
+	public int Age { get; set; }
+	public string Pays { get; set; }
+	public string Ville { get; set; }
+	public string Rue { get; set; }
 	public string Numero { get; set; }
 	// No changes expected for Phone property
 	public string Phone { get; set; }
