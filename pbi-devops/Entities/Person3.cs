@@ -1,15 +1,15 @@
 namespace pbi_devops.Entities;
-// English
+// Français
 public class Person3
 {
 	public long Id { get; set; }
-	public string Name { get; set; }
-	public string Lastname { get; set; }
-	public DateTime BirthDate { get; set; }
+	public string Prenom { get; set; }
+	public string NomDeFamille { get; set; }
+	public DateTime DateDeNaissance { get; set; }
 	public string Email { get; set; }
 	public int Age { get; set; }
-	public string Country { get; set; }
-	public string City { get; set; }
-	public string Street { get; set; }
-	public string Number { get; set; }
+	public string Pays { get; set; }
+	public string Ville { get; set; }
+	public string Rue { get; set; }
+	public string Numero { get; set; }
 }
