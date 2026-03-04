@@ -1,5 +1,5 @@
 namespace pbi_devops.Entities;
-// Español
+// Français
 public class Person
 {
 	public long Id { get; set; }
